@@ -1,0 +1,39 @@
+/*web-sassui-layout-justify Start*/
+.web-sassui-layout-justify, .test-web-sassui-layout-justify {
+  vertical-align: top;
+  text-align: justify;
+  text-justify: distribute-all-lines;
+  /* distribute items in IE */
+  *zoom: 1;
+  /* fully justify all items in browsers other than IE */
+  /*
+  Attention:IE7 don't need the solution when you use span/a/input and the other default inline element.
+  */
+}
+
+.web-sassui-layout-justify > *, .test-web-sassui-layout-justify > * {
+  text-align: left;
+  /* customize to suit */
+  vertical-align: top;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+
+.web-sassui-layout-justify:after, .test-web-sassui-layout-justify:after {
+  display: inline-block;
+  content: '\200b';
+  overflow: hidden;
+  height: 0;
+  width: 100%;
+}
+
+/*web-sassui-layout-justify End*/
+.test-web-sassui-layout-justify {
+  border: 1px solid #000;
+  font-size: 0;
+}
+
+.test-web-sassui-layout-justify > * {
+  font-size: 12px;
+}
