@@ -1,0 +1,23 @@
+.react-slide-nav {
+  --react-slide-nav-bg-color: #aaa;
+  --react-slide-nav-slider-height: 2px;
+  --react-slide-nav-slider-duration: 0.3s;
+  --react-slide-nav-slider-bottom: 0px;
+  position: relative;
+
+  &__slider {
+    position: absolute;
+    left: 0;
+    bottom: var(--react-slide-nav-slider-bottom);
+    height: var(--react-slide-nav-slider-height);
+    background: var(--react-slide-nav-bg-color);
+
+    &[data-animation="true"] {
+      transition: all var(--react-slide-nav-slider-duration) ease-in-out;
+    }
+  }
+
+  [data-role="nav-item"] {
+    cursor: pointer;
+  }
+}
