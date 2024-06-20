@@ -1,6 +1,6 @@
 {
   "name": "@jswork/react-slide-nav",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -34,5 +34,12 @@
   },
   "dependencies": {
     "@jswork/react-list": "^1.2.3"
-  }
+  },
+  "keywords": [
+    "component",
+    "nav",
+    "navigation",
+    "react",
+    "slide"
+  ]
 }
