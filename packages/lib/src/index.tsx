@@ -1,7 +1,7 @@
 // import noop from '@jswork/noop';
 import cx from 'classnames';
 import React, { ReactNode, Component, HTMLAttributes } from 'react';
-import ReactList, { TemplateArgs } from '@jswork/react-list';
+import ReactList, { TemplateArgs, ReactListProps } from '@jswork/react-list';
 
 const CLASS_NAME = 'react-slide-nav';
 
@@ -34,6 +34,10 @@ export type ReactSlideNavProps = {
    * The template function for rendering each item.
    */
   template?: ReactSlideNavTemplate;
+  /**
+   * The props for react-list.
+   */
+  listProps?: Omit<ReactListProps, 'items' | 'template'>;
 } & HTMLAttributes<HTMLDivElement>;
 
 const defaultTemplate: ReactSlideNavTemplate = (args, cb) => {
@@ -52,6 +56,7 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
   static version = '__VERSION__';
   static defaultProps = {
     activeClassName: 'is-active',
+    items: [],
     template: defaultTemplate,
   };
 
@@ -98,7 +103,7 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
   };
 
   render() {
-    const { className, activeClassName, children, items, template, ...rest } = this.props;
+    const { className, activeClassName, children, items, template, listProps, ...rest } = this.props;
     const { animation } = this.state;
     return (
       <nav
@@ -116,7 +121,7 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
             width: this.activeItem?.width || 0,
           }}
         />
-        <ReactList items={items} template={this.handleTemplate} />
+        <ReactList items={items} template={this.handleTemplate} {...listProps} />
       </nav>
     );
   }
