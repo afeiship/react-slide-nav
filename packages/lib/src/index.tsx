@@ -111,16 +111,14 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
         data-component={CLASS_NAME}
         className={cx(CLASS_NAME, className)}
         data-active-index={activeIndex}
+        data-animation={animation}
+        style={{
+          // @ts-ignore
+          '--decoration-left': `${this.activeItem?.left || 0}px`,
+          '--decoration-width': `${this.activeItem?.width || 0}px`,
+        }}
         {...rest}
       >
-        <div
-          className={cx(`${CLASS_NAME}__slider`)}
-          data-animation={animation}
-          style={{
-            left: this.activeItem?.left || 0,
-            width: this.activeItem?.width || 0,
-          }}
-        />
         <ReactList items={items} template={this.handleTemplate} {...listProps} />
       </nav>
     );

@@ -13,6 +13,13 @@ function App() {
         activeClassName="text-red-600"
         items={['Home', 'About', 'Contact Us', 'FAQ']}
       />
+      <div className="blank-y-10"></div>
+      {/*<ReactSlideNav*/}
+      {/*  className="x-5 h-10 fcc"*/}
+      {/*  activeClassName="text-red-600"*/}
+      {/*  eventNames={['onClick', 'onMouseOver']}*/}
+      {/*  items={['Home', 'About', 'Contact Us', 'FAQ']}*/}
+      {/*/>*/}
     </div>
   );
 }

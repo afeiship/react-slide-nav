@@ -2,17 +2,22 @@
   --react-slide-nav-bg-color: #aaa;
   --react-slide-nav-slider-height: 2px;
   --react-slide-nav-slider-duration: 0.3s;
-  --react-slide-nav-slider-bottom: 0px;
   position: relative;
+  --decoration-left: 50%;
+  --decoration-width: 0;
 
-  &__slider {
+  &::after {
+    content: '';
     position: absolute;
-    left: 0;
-    bottom: var(--react-slide-nav-slider-bottom);
+    bottom: 0;
+    left: var(--decoration-left);
+    width: var(--decoration-width);
     height: var(--react-slide-nav-slider-height);
     background: var(--react-slide-nav-bg-color);
+  }
 
-    &[data-animation="true"] {
+  &[data-animation="true"] {
+    &::after {
       transition: all var(--react-slide-nav-slider-duration) ease-in-out;
     }
   }
