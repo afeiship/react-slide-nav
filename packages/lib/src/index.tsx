@@ -48,7 +48,7 @@ export type ReactSlideNavProps = {
 const defaultTemplate: ReactSlideNavTemplate = (args, cb) => {
   const { item, index, active, activeClassName, options } = args;
   const { events } = options;
-  const eventPairs = events.reduce((acc, name) => ((acc[name] = cb), acc), {});
+  const eventPairs = events.reduce((acc, name: string) => ((acc[name] = cb), acc), {});
 
   return <a
     data-role="nav-item"
