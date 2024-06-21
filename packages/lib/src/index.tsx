@@ -1,6 +1,6 @@
 // import noop from '@jswork/noop';
 import cx from 'classnames';
-import React, { ReactNode, Component, HTMLAttributes } from 'react';
+import React, { ReactNode, Component, HTMLAttributes, MouseEvent } from 'react';
 import ReactList, { TemplateArgs, ReactListProps } from '@jswork/react-list';
 
 const CLASS_NAME = 'react-slide-nav';
@@ -10,7 +10,7 @@ type ReactSlideNavTemplateArgs = TemplateArgs & {
   activeClassName?: string;
 }
 
-export type ReactSlideNavTemplate = (args: ReactSlideNavTemplateArgs, cb: (event: React.MouseEvent<HTMLAnchorElement>) => void) => ReactNode
+export type ReactSlideNavTemplate = (args: ReactSlideNavTemplateArgs, cb: (event: MouseEvent<HTMLAnchorElement>) => void) => ReactNode
 
 export type ReactSlideNavProps = {
   /**
@@ -95,7 +95,7 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
     const { activeIndex } = this.state;
     const { activeClassName, template, items } = this.props;
     const active = index === activeIndex;
-    const cb = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    const cb = (event: MouseEvent<HTMLAnchorElement>) => {
       const index = event.currentTarget.getAttribute('data-index');
       this.setState({ activeIndex: Number(index) });
     };
@@ -104,13 +104,13 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
 
   render() {
     const { className, activeClassName, children, items, template, listProps, ...rest } = this.props;
-    const { animation } = this.state;
+    const { animation, activeIndex } = this.state;
     return (
       <nav
         ref={this.rootRef}
         data-component={CLASS_NAME}
         className={cx(CLASS_NAME, className)}
-        data-active-index={this.state.activeIndex}
+        data-active-index={activeIndex}
         {...rest}
       >
         <div
