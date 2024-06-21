@@ -87,11 +87,10 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
     const { activeIndex } = this.state;
     if (!root || activeIndex < 0) return null;
     const els = this.root.querySelectorAll('[data-role="nav-item"]');
-    const activeElement = els[activeIndex];
-    const bound = activeElement.getBoundingClientRect();
+    const activeElement = els[activeIndex] as HTMLElement;
     return {
-      left: bound.left - this.root?.getBoundingClientRect().left,
-      width: bound.width,
+      left: activeElement.offsetLeft,
+      width: activeElement.offsetWidth,
     };
   }
 
@@ -102,15 +101,15 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
   }
 
   handleTemplate = (args: TemplateArgs) => {
-    const { item, index, options } = args;
+    const { index } = args;
     const { activeIndex } = this.state;
-    const { activeClassName, template, items } = this.props;
+    const { activeClassName, template } = this.props;
     const active = index === activeIndex;
     const cb = (event: MouseEvent<HTMLAnchorElement>) => {
       const index = event.currentTarget.getAttribute('data-index');
       this.setState({ activeIndex: Number(index) });
     };
-    return template?.({ options, items, item, index, active, activeClassName }, cb);
+    return template?.({ ...args, active, activeClassName }, cb);
   };
 
   render() {
