@@ -8,18 +8,28 @@ function App() {
         Build Time: {BUILD_TIME}
       </div>
       <h1>react-slide-nav</h1>
-      <ReactSlideNav
-        className="x-5 h-10 fcc"
-        activeClassName="text-red-600"
-        items={['Home', 'About', 'Contact Us', 'FAQ']}
-      />
-      <div className="blank-y-10"></div>
-      {/*<ReactSlideNav*/}
-      {/*  className="x-5 h-10 fcc"*/}
-      {/*  activeClassName="text-red-600"*/}
-      {/*  eventNames={['onClick', 'onMouseOver']}*/}
-      {/*  items={['Home', 'About', 'Contact Us', 'FAQ']}*/}
-      {/*/>*/}
+      <dl>
+        <dt className="text-lg text-center">Events: [onClick]</dt>
+        <dd>
+          <ReactSlideNav
+            className="x-5 h-10 fcc"
+            activeClassName="text-red-600"
+            items={['Home', 'About', 'Contact Us', 'FAQ']}
+          />
+        </dd>
+      </dl>
+      <div className="blank-px-y-1 bg-green-500 my-5"></div>
+      <dl>
+        <dt className="text-lg text-center">Events: [onClick, onMouseOver]</dt>
+        <dd>
+          <ReactSlideNav
+            className="x-5 h-10 fcc"
+            activeClassName="text-red-600"
+            events={['onClick', 'onMouseOver']}
+            items={['Home', 'About', 'Contact Us', 'FAQ']}
+          />
+        </dd>
+      </dl>
     </div>
   );
 }
