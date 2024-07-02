@@ -23,11 +23,6 @@ export type ReactSlideNavProps = {
    */
   activeClassName?: string;
   /**
-   * The events for spy navigation.
-   * @default ['onClick']
-   */
-  events?: string[];
-  /**
    * The children element.
    */
   children?: ReactNode;
@@ -40,22 +35,25 @@ export type ReactSlideNavProps = {
    */
   template?: ReactSlideNavTemplate;
   /**
+   * The callback when item is clicked.
+   * @param event
+   */
+  onItemClick?: (index: number) => void;
+  /**
    * The props for react-list.
    */
   listProps?: Omit<ReactListProps, 'items' | 'template'>;
 } & HTMLAttributes<HTMLDivElement>;
 
 const defaultTemplate: ReactSlideNavTemplate = (args, cb) => {
-  const { item, index, active, activeClassName, options } = args;
-  const { events } = options;
-  const eventPairs = events.reduce((acc, name: string) => ((acc[name] = cb), acc), {});
+  const { item, index, active, activeClassName } = args;
 
   return <a
     data-role="nav-item"
     className={cx(`${CLASS_NAME}__item`, { [activeClassName as string]: active })}
     data-index={index}
     key={index}
-    {...eventPairs}
+    onClick={cb}
   >
     {item}
   </a>;
@@ -68,7 +66,6 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
     activeClassName: 'is-active',
     items: [],
     template: defaultTemplate,
-    events: ['onClick'],
   };
 
   private rootRef = React.createRef<HTMLDivElement>();
@@ -103,17 +100,20 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
   handleTemplate = (args: TemplateArgs) => {
     const { index } = args;
     const { activeIndex } = this.state;
-    const { activeClassName, template } = this.props;
+    const { activeClassName, template, onItemClick } = this.props;
     const active = index === activeIndex;
     const cb = (event: MouseEvent<HTMLAnchorElement>) => {
       const index = event.currentTarget.getAttribute('data-index');
-      this.setState({ activeIndex: Number(index) });
+      const idx = Number(index);
+      this.setState({ activeIndex: idx }, () => {
+        onItemClick?.(idx);
+      });
     };
     return template?.({ ...args, active, activeClassName }, cb);
   };
 
   render() {
-    const { className, activeClassName, events, children, items, template, listProps, ...rest } = this.props;
+    const { className, activeClassName, children, items, template, onItemClick, listProps, ...rest } = this.props;
     const { animation, activeIndex } = this.state;
     return (
       <nav
@@ -129,7 +129,7 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
         }}
         {...rest}
       >
-        <ReactList options={{ events }} items={items} template={this.handleTemplate} {...listProps} />
+        <ReactList items={items} template={this.handleTemplate} {...listProps} />
       </nav>
     );
   }
