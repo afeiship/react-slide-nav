@@ -36,6 +36,10 @@ export type ReactSlideNavProps = {
    */
   template?: ReactSlideNavTemplate;
   /**
+   * The initial value of active index.
+   */
+  value?: number;
+  /**
    * The callback when item is clicked.
    * @param event
    */
@@ -65,6 +69,7 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
   static version = '__VERSION__';
   static defaultProps = {
     activeClassName: 'is-active',
+    value: 0,
     items: [],
     template: defaultTemplate,
   };
@@ -72,7 +77,7 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
   private rootRef = React.createRef<HTMLDivElement>();
 
   state = {
-    activeIndex: -1,
+    value: this.props.value,
     animation: false,
   };
 
@@ -82,10 +87,10 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
 
   get activeItem() {
     const root = this.root;
-    const { activeIndex } = this.state;
-    if (!root || activeIndex < 0) return null;
+    const { value } = this.state;
+    if (!root || value! < 0) return null;
     const els = this.root.querySelectorAll('[data-role="nav-item"]');
-    const activeElement = els[activeIndex] as HTMLElement;
+    const activeElement = els[value!] as HTMLElement;
     return {
       left: activeElement.offsetLeft,
       width: activeElement.offsetWidth,
@@ -93,16 +98,26 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
   }
 
   componentDidMount() {
-    this.setState({ activeIndex: 0 }, () => {
+    const { value } = this.state;
+    this.setState({ value }, () => {
       this.setState({ animation: true });
     });
   }
 
+  componentDidUpdate(prevProps: ReactSlideNavProps) {
+    const { value } = this.props;
+    if (value !== prevProps.value) {
+      this.setState({ value }, () => {
+        this.setState({ animation: true });
+      });
+    }
+  }
+
   handleTemplate = (args: TemplateArgs) => {
     const { index } = args;
-    const { activeIndex } = this.state;
+    const { value } = this.state;
     const { activeClassName, template, onChange } = this.props;
-    const active = index === activeIndex;
+    const active = index === value;
     const cb = (event: MouseEvent<HTMLAnchorElement>) => {
       const index = event.currentTarget.getAttribute('data-index');
       const idx = Number(index);
@@ -114,14 +129,14 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
   };
 
   render() {
-    const { className, activeClassName, children, items, template, onChange, listProps, ...rest } = this.props;
-    const { animation, activeIndex } = this.state;
+    const { className, activeClassName, children, items, template, onChange, listProps, value, ...rest } = this.props;
+    const { animation, value: stateValue } = this.state;
     return (
       <nav
         ref={this.rootRef}
         data-component={CLASS_NAME}
         className={cx(CLASS_NAME, className)}
-        data-active-index={activeIndex}
+        data-active-index={stateValue}
         data-animation={animation}
         style={{
           // @ts-ignore
