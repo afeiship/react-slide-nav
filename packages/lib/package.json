@@ -1,6 +1,6 @@
 {
   "name": "@jswork/react-slide-nav",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -14,7 +14,7 @@
   "scripts": {
     "build": "tsup",
     "postbuild": "postsass -s src/style.scss -d dist/style.css -c",
-    "release": "release-it --ci"
+    "release": "release-it"
   },
   "devDependencies": {
     "@jswork/react-list": "^1.2.10",
