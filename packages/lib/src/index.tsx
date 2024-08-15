@@ -99,33 +99,35 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
 
   componentDidMount() {
     const { value } = this.state;
-    this.setState({ value }, () => {
-      this.setState({ animation: true });
-    });
+    this.doChange(value!);
   }
 
   componentDidUpdate(prevProps: ReactSlideNavProps) {
     const { value } = this.props;
     if (value !== prevProps.value) {
-      this.setState({ value }, () => {
-        this.setState({ animation: true });
-      });
+      this.doChange(value!);
     }
   }
 
   handleTemplate = (args: TemplateArgs) => {
     const { index } = args;
     const { value } = this.state;
-    const { activeClassName, template, onChange } = this.props;
+    const { activeClassName, template } = this.props;
     const active = index === value;
     const cb = (event: MouseEvent<HTMLAnchorElement>) => {
       const index = event.currentTarget.getAttribute('data-index');
       const idx = Number(index);
-      this.setState({ value: idx }, () => {
-        onChange?.(idx);
-      });
+      this.doChange(idx);
     };
     return template?.({ ...args, active, activeClassName, cb });
+  };
+
+  doChange = (index: number) => {
+    const { onChange } = this.props;
+    this.setState({ value: index }, () => {
+      this.setState({ animation: true });
+      onChange?.(index);
+    });
   };
 
   render() {

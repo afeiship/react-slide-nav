@@ -1,15 +1,9 @@
 import ReactSlideNav from '@jswork/react-slide-nav/src';
 import '@jswork/react-slide-nav/src/style.scss';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 function App() {
   const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setActiveIndex(1);
-    }, 2000);
-  }, []);
 
   return (
     <div className="m-10 p-4 shadow bg-gray-100 text-gray-800 hover:shadow-md transition-all">
@@ -24,10 +18,28 @@ function App() {
             activeClassName="text-red-600"
             items={['Home', 'About', 'Contact Us', 'FAQ']}
             value={activeIndex}
-            onChange={(e) => setActiveIndex(e)}
+            onChange={(e) => {
+              console.log('change?: ', e);
+              setActiveIndex(e);
+            }}
           />
         </dd>
       </dl>
+      <div className="blank-y-2" />
+      <nav className="x-2 fcc">
+        <button className="btn btn-sm btn-primary" onClick={() => setActiveIndex(0)}>
+          set to 1
+        </button>
+        <button className="btn btn-sm btn-primary" onClick={() => setActiveIndex(1)}>
+          set to 2
+        </button>
+        <button className="btn btn-sm btn-primary" onClick={() => setActiveIndex(2)}>
+          set to 3
+        </button>
+        <button className="btn btn-sm btn-primary" onClick={() => setActiveIndex(3)}>
+          set to 4
+        </button>
+      </nav>
     </div>
   );
 }
