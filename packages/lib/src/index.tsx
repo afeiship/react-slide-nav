@@ -121,7 +121,7 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
     const cb = (event: MouseEvent<HTMLAnchorElement>) => {
       const index = event.currentTarget.getAttribute('data-index');
       const idx = Number(index);
-      this.setState({ activeIndex: idx }, () => {
+      this.setState({ value: idx }, () => {
         onChange?.(idx);
       });
     };
