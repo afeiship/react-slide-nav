@@ -8,9 +8,10 @@ const CLASS_NAME = 'react-slide-nav';
 type ReactSlideNavTemplateArgs = TemplateArgs & {
   active: boolean;
   activeClassName?: string;
+  cb: (event: MouseEvent<HTMLAnchorElement>) => void;
 }
 
-export type ReactSlideNavTemplate = (args: ReactSlideNavTemplateArgs, cb: (event: MouseEvent<HTMLAnchorElement>) => void) => ReactNode
+export type ReactSlideNavTemplate = (args: ReactSlideNavTemplateArgs) => ReactNode;
 
 export type ReactSlideNavProps = {
   /**
@@ -38,15 +39,15 @@ export type ReactSlideNavProps = {
    * The callback when item is clicked.
    * @param event
    */
-  onItemClick?: (index: number) => void;
+  onChange?: (index: number) => void;
   /**
    * The props for react-list.
    */
   listProps?: Omit<ReactListProps, 'items' | 'template'>;
 } & HTMLAttributes<HTMLDivElement>;
 
-const defaultTemplate: ReactSlideNavTemplate = (args, cb) => {
-  const { item, index, active, activeClassName } = args;
+const defaultTemplate: ReactSlideNavTemplate = (args) => {
+  const { item, index, active, activeClassName, cb } = args;
 
   return <a
     data-role="nav-item"
@@ -100,20 +101,20 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
   handleTemplate = (args: TemplateArgs) => {
     const { index } = args;
     const { activeIndex } = this.state;
-    const { activeClassName, template, onItemClick } = this.props;
+    const { activeClassName, template, onChange } = this.props;
     const active = index === activeIndex;
     const cb = (event: MouseEvent<HTMLAnchorElement>) => {
       const index = event.currentTarget.getAttribute('data-index');
       const idx = Number(index);
       this.setState({ activeIndex: idx }, () => {
-        onItemClick?.(idx);
+        onChange?.(idx);
       });
     };
-    return template?.({ ...args, active, activeClassName }, cb);
+    return template?.({ ...args, active, activeClassName, cb });
   };
 
   render() {
-    const { className, activeClassName, children, items, template, onItemClick, listProps, ...rest } = this.props;
+    const { className, activeClassName, children, items, template, onChange, listProps, ...rest } = this.props;
     const { animation, activeIndex } = this.state;
     return (
       <nav

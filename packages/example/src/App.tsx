@@ -9,13 +9,12 @@ function App() {
       </div>
       <h1>react-slide-nav</h1>
       <dl>
-        <dt className="text-lg text-center">Events: [onClick]</dt>
         <dd>
           <ReactSlideNav
             className="x-5 h-10 fcc"
             activeClassName="text-red-600"
             items={['Home', 'About', 'Contact Us', 'FAQ']}
-            onItemClick={(e) => console.log('on item click: ', e)}
+            onChange={(e) => console.log('on item click: ', e)}
           />
         </dd>
       </dl>

@@ -11,7 +11,7 @@
     left: var(--decoration-left);
     width: var(--decoration-width);
     height: var(--react-slide-nav-slider-height);
-    background: var(--react-slide-nav-bg-color);
+    background: var(--react-slide-nav-bg-color, currentColor);
   }
 
   &[data-animation="true"] {
