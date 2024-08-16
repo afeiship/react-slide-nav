@@ -48,6 +48,11 @@ export type ReactSlideNavProps = {
    * The props for react-list.
    */
   listProps?: Omit<ReactListProps, 'items' | 'template'>;
+  /**
+   * Whether to hide underline.
+   * @default false
+   */
+  hideUnderline?: boolean;
 } & HTMLAttributes<HTMLDivElement>;
 
 const defaultTemplate: ReactSlideNavTemplate = (args) => {
@@ -72,6 +77,7 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
     value: 0,
     items: [],
     template: defaultTemplate,
+    hideUnderline: false,
   };
 
   private rootRef = React.createRef<HTMLDivElement>();
@@ -131,12 +137,25 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
   };
 
   render() {
-    const { className, activeClassName, children, items, template, onChange, listProps, value, ...rest } = this.props;
+    const {
+      className,
+      activeClassName,
+      children,
+      items,
+      template,
+      onChange,
+      listProps,
+      value,
+      hideUnderline,
+      ...rest
+    } = this.props;
     const { animation, value: stateValue } = this.state;
+
     return (
       <nav
         ref={this.rootRef}
         data-component={CLASS_NAME}
+        data-underline={!hideUnderline}
         className={cx(CLASS_NAME, className)}
         data-active-index={stateValue}
         data-animation={animation}

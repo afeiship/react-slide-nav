@@ -23,6 +23,18 @@ function App() {
               setActiveIndex(e);
             }}
           />
+          <hr />
+          <ReactSlideNav
+            className="x-5 h-10 fcc"
+            hideUnderline
+            activeClassName="text-green-600"
+            items={['Home', 'About', 'Contact Us', 'FAQ']}
+            value={activeIndex}
+            onChange={(e) => {
+              console.log('change?: ', e);
+              setActiveIndex(e);
+            }}
+          />
         </dd>
       </dl>
       <div className="blank-y-2" />

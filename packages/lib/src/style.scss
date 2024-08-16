@@ -4,19 +4,21 @@
   --react-slide-nav-slider-duration: 0.3s;
   position: relative;
 
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: var(--decoration-left);
-    width: var(--decoration-width);
-    height: var(--react-slide-nav-slider-height);
-    background: var(--react-slide-nav-bg-color, currentColor);
-  }
-
-  &[data-animation="true"] {
+  &[data-underline="true"] {
     &::after {
-      transition: all var(--react-slide-nav-slider-duration) ease-in-out;
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: var(--decoration-left);
+      width: var(--decoration-width);
+      height: var(--react-slide-nav-slider-height);
+      background: var(--react-slide-nav-bg-color, currentColor);
+    }
+
+    &[data-animation="true"] {
+      &::after {
+        transition: all var(--react-slide-nav-slider-duration) ease-in-out;
+      }
     }
   }
 
