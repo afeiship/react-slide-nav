@@ -28,6 +28,10 @@ export type ReactSlideNavProps = {
    */
   children?: ReactNode;
   /**
+   * The callback when item is clicked.
+   */
+  onItemClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
+  /**
    * The items of spy navigation.
    */
   items: any[];
@@ -53,7 +57,7 @@ export type ReactSlideNavProps = {
    * @default false
    */
   hideUnderline?: boolean;
-} & HTMLAttributes<HTMLDivElement>;
+} & Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>;
 
 const defaultTemplate: ReactSlideNavTemplate = (args) => {
   const { item, index, active, activeClassName, cb } = args;
@@ -118,12 +122,13 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
   handleTemplate = (args: TemplateArgs) => {
     const { index } = args;
     const { value } = this.state;
-    const { activeClassName, template } = this.props;
+    const { onItemClick, activeClassName, template } = this.props;
     const active = index === value;
     const cb = (event: MouseEvent<HTMLAnchorElement>) => {
       const index = event.currentTarget.getAttribute('data-index');
       const idx = Number(index);
       this.doChange(idx);
+      onItemClick?.(event);
     };
     return template?.({ ...args, active, activeClassName, cb });
   };
@@ -141,6 +146,7 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
       className,
       activeClassName,
       children,
+      onItemClick,
       items,
       template,
       onChange,
