@@ -102,8 +102,8 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
     const els = root.querySelectorAll('[data-role="nav-item"]');
     const activeElement = els[value!] as HTMLElement;
     return {
-      left: activeElement.offsetLeft,
-      width: activeElement.offsetWidth,
+      left: activeElement?.offsetLeft || 0,
+      width: activeElement?.offsetWidth || 0,
     };
   }
 
