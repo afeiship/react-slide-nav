@@ -7,6 +7,7 @@ const CLASS_NAME = 'react-slide-nav';
 
 type ReactSlideNavTemplateArgs = TemplateArgs & {
   active: boolean;
+  value?: number;
   activeClassName?: string;
   cb: (event: MouseEvent<HTMLAnchorElement>) => void;
 }
@@ -130,7 +131,7 @@ export default class ReactSlideNav extends Component<ReactSlideNavProps> {
       this.doChange(idx);
       onItemClick?.(event);
     };
-    return template?.({ ...args, active, activeClassName, cb });
+    return template?.({ ...args, value, active, activeClassName, cb });
   };
 
   doChange = (index: number) => {
